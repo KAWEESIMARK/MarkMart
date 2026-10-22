@@ -5,7 +5,11 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
+# Fix for Vercel - use /tmp folder which is writable
+if os.environ.get('VERCEL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tmp/market.db'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
 app.config['SECRET_KEY'] = 'MarkMart'
 app.config['UPLOAD_FOLDER'] = 'static/logos'
 app.config['PRODUCT_FOLDER'] = 'static/products'
