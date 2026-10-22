@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business News - MarkMart</title>
+<style>
+body{font-family:Arial;margin:0;background:#f8f9fa}
+.header{background:#0a0a0a;color:#fff;padding:15px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
+.tabs{display:flex;gap:8px;padding:12px;overflow-x:auto;background:#fff;border-bottom:1px solid #ddd;position:sticky;top:60px;z-index:9}
+.tab{padding:8px 16px;border-radius:20px;border:1px solid #ddd;background:#fff;white-space:nowrap;cursor:pointer;text-decoration:none;color:#000;font-size:14px}
+.tab.active{background:#ff6b00;color:#fff;border-color:#ff6b00}
+.news-grid{display:grid;grid-template-columns:1fr;gap:12px;padding:12px;max-width:800px;margin:0 auto}
+@media(min-width:600px){.news-grid{grid{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow: 2px 10px rgba(0,0,0,0.08)}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-body{padding:12px}
+.badge{background:#ff6b00;color:#fff;padding:3px 8px;border-radius:10px;font-size:11px}
+.time{color:#777;font-size:12px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div><b style="front-size:20px">📰 MarkMart Business News</b><br><small>World • Uganda • Kampala • Mukono • Entebbe</small></div>
+  <a href="/"color:#fff;text-decoration:none">🏠</a>
+</div>
+
+<div class="tabs">
+  <a href="/business-news" class="tab active">🌍 World</a>
+  <a href="/business-news/Uganda" class="tab">🏳️ Uganda</a>
+  <a href="/business-news?q=kampala" class="tab">📍 Kampala</a>
+  <a href="/business-news?q=mukono" class="tab">📍 Mukono</a>
+  <a href="/business-news?q=Entebbe" class="tab"> 📍 Entebbe</a>
+  <a href="/business-news?q=farming" class="tab"> 🌽 Farming</a>
+  <a href="/business-news?q=market" class="tab"> 💹 Markets</a>
+</div>
+
+<div style="max-width:800px;margin:0 auto;padding:0 12px">
+  <form action="/business-news" method="GET" style="display:flex;gap:8px;margin-top:12px">
+    <input name="q" placeholder="Search news: e.g. Kampala trade, Mukono..." style="flex:1;padding:10px;border-radius:20px;border:1px solid #ddd">
+    <button style="background:#ff6b00;color:#fff;border:none;padding:10px 18px;border-radius:20px">Search</button>
+  </form>
+</div>
+
+<div class="news-grid">
+{% for n in news %}
+<div class="card">
+  <img src={{ n.image }}" onerror="this.src="https://via.placeholder.com/300x180?text=Business+News'">
+  <div class="card-body">
+    <span class="badge">{{ n.source }}</span> <span class="time">{{ n.time }}</span>
+    <h3 style="margin:8px 0;font-size:16px">{{ n.title }}</h3>
+    <p style="color#555;font-size:13px;margin:0 0 10px">{{ n.description }}</p>
+    <div style="display:flex;gap:8px">
+      <a href="{{ n.link }}" target="_blank" style="background:#0a0a0a;color:#fff;padding:6px 12px;border-radius:20px;text-decoration:none;font-size:13px">Read Full ↗️</a>
+      <button onclick="navigator.clipboard.writeText('{{ n.link }}'); alert('News link copied - share to Whatsapp Kampala/Mukono!')" style="background:#e8f0ff;border:none;padding:6px 12px;border-radius:20px;font-size:13px"🖇️ Share</button>
+      <button onclick="alert('Saved to Watch Later - read offline in Mukono!')" style="background:#fff3e0;border:none;padding:6px 12px;border-radius:20px;font-size:13px">🔖 Save</button>
+    </div>
+  </div>
+<?div>
+{% else %}
+<p style="padding:20px;text-align:center"Loading world business news... Check internet</p>
+{% endfor %}
+</div>
+
+<div style="background:#fff;margin:12px;padding:15px;border-radius:12px;text-align:center;max-width:800px;margin:20px auto">
+  <h3>💡 Why this makes you investable?</h3>
+  <p style="font-size:14px;color:#555">User in Mukono opens app to check maize price in Kampala ′n sees your tomato video ′n buys! News brings daily users, videos bring sales. Investors love daily active users!</p>
+  <a href="/reels" style="background:#ff6b00;color:#fff;padding:10px 20px;border-radius:20px;text-deoration:none">▶️ Go to Reels to Sell</a>
+</div>
+
+<div style="position:fixed;bottom:0;width:100%;background:#fff;padding:10px;display:flex;justify-content:space-around;border-top:1px solid #ddd;max-width:800px;left:50%;transform:translateX(-50%)">
+  <a href="/" style="text-decoration:none">🏠 Home</a>
+  <a href="/business-news" style="text-decoration:none;color:#ff6b00"><b>📰 News</b></a>
+  <a href="/reels" style="text-decoration:none">▶️ Reels</a>
+  <a href="/trending" style="text-decoration:none">🔥 Trending</a>
+<?div>
+<div style="height:60px"></div>
+</body>
+<?html>

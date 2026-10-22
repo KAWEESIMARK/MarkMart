@@ -1,0 +1,9 @@
+<canvas id="sig" width="300" height="150" style="border:1px solid #000"></canvas>
+<button onclick="clearSig()">Clear</button>
+<button onClick="saveSig()">Sign & Estimate</button>
+<script>
+let canvas=document.getElementById('sig'), ctx=canvas.getContext('2d'), drawing=false;
+canvas.addEventListener('touchstart',()=>drawing=true); canvas.addEventListener('touchend',()=>drawing=false);
+canvas.addEventListener('touchmove',e=>{if(!drawing)return; ctx.lineTo(e.touches[0].clientX, e.touches[0].clientY); ctx.stroke()});
+function saveSig(){ let data=canvas.toDataURL(); fetch('/save-signature',{method:'POST', body:JSON.stringify({sig:data}})}
+</script>

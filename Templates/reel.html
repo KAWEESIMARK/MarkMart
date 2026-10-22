@@ -1,0 +1,24 @@
+Features:
+- Swipe up/down like Youtube Shorts
+- ❤️ Like (counts)
+- 💬 Comment popup
+- 🕰️ Watch Later
+- 📎 Share link 'n copies link https://.../video/5 to send to Mukono/Kampala via Whatsapp
+<!DOCTYPE html>
+<html>head><meta name="viewport" content="width=device-width, initial-scale=1"><title>MarkMart Reels</title><style>body{margin:0;background:@000;color:@fff;font-family:Arial}.reel-container{max-width:400px,margin:0 auto;height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}.reel{height:100vh;scroll-snap-align:start;position:relative;background:111;display:flex;flex-direction:column;justify-content:center}.reel video{width:100%;height:80vh;object-fit:cover}.reel-info{padding:12px;background:linear-gradient(transparent,rgba(0,0,0,0.8));position:absolute;bottom:60px;left:0;right:50px}.actions{position:absolute;right:10px;bottom:80px;display:flex;flex-direction:column;gapL20px}.action-btn{background:rgba(255,255,255,0.2);border:none;color:#fff;width:50px;height:50px;border-radius:50%;font-size:20px;cursor:pointer}</style></head><body>
+<div style="padding: 10px;background:@ff6b00;position:sticky;top:0;display:flex;justify-content:space-between"><b>🔥 MarkMart Reels</b>>a href="/create-video" style="background:#fff;color:#ff6b00;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:bold">+ Create</a></div>
+<div class="reel-container">
+{% for v in videos %}
+<div class="reel"><video src="{{ v.vide_url }}" controls loop playsinline></video><div class="reel-info"><b>@Shop {{ v.shop_id }} - {{ v.views }} views</b><br>{{ v.title }}</div><div class="actions"><button class="action-btn" id="like-{{v.id}}" onclick="likeVideo({{v.id}})">❤️<br><small id="count-{{v.id}}">0</small></button><button class="action-btn" onclick="watchlater({v.id}})">🕰️</button><button class="action-btn" onclick="shareVideo('{{ request.host_url }}video/{{v.vid}}')">📎</button></div></div>
+{% else %}
+<div style="padding:50px;text-align:center"><h2>No videos yet</h2><a href"/create-video" style="background:#ffb00;color:#fff;padding:12px 20px;border-radius:20px,text-decoration:none">Create First Reel 🎬</a></div>
+{% endfor %}
+</div>
+<script>
+function likeVideo(id){fetch('/video/'+id+'/like'/{method:'POST'}).then(r=>r.json()).then(d=>{document.getElementById('count-'+id).innerText=d.count})}
+function watchLater(id){fetch('/video/'+id'/watch-later',{method:'POST']).then(()=>alert('Saved to Watch Later!'))}
+function shareVideo(link){navigator.clipboard.writeText(link);alert('Link copied! Share to Kampala/Mukono via Whatsapp:\n'+link);}
+<button onclick="fetch('/price-alert/{{v.id}}').then(()=>alert('✅ You will be alrted when price drops via Whatsapp!'))" style="background:#fff3eo;border:none;padding:6px 12px;border-radius:20px">🔔 Price Alert</button>
+</script>
+</body></html>
+

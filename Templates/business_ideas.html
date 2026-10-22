@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1"><title>Business Ideas</title>
+<style>body{font-family:Arial;margin:0;backgroud:#f5f5f5}.header{background:#0a0a0a;color:#fff;padding:15px}.card{background:#fff;margin:10px;border-radius:12px;padding:12px}.input{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}.btn{background:#ff6b00;color:#fff;border:none;padding:12px;width:100%;border-radius:8px;font-weight:bold}</style></head><body>
+<div class="header"><b>💡 Business Ideas Make Money</b><br><small>Learn from Mukono, Entebbe, Kampala traders</samall></div>
+
+<div class="card" style="border:2px dashed #ff6b00"><h3>Share Your Business Idea or Question</h3>
+<form method="POST"><input name="input" placeholder="Title: e.g. I have 100k what business in Mukono?" required></textarea>
+<input name="author" class="input" placeholder="Your name (optional)"><input name="location" class="input" placeholder="Location: Mukono, Entebbe, Kampala"><button class="btn">Post Idea - Help Others</button></form></div>
+
+{% for idea in ideas %}
+<div class="card"><span style="background:#e8f0ff;padding:3px 8px:border-radius:10px;font-size:12px">📍 {{ idea.location }}</span> <small>{{ idea.created_at.strftime('%Y-%m-%d') if idea.created_at else 'Today' }}</small>
+<h3 style="margin:8px 0">{{ idea.title }}</h3><p style="color:#555:font-size:14px">{{ idea.description }}</p>
+<div style="display:flex;gap:10px"><button onclick="likeIdea({{ idea.id }})" style="background:#ffe9e0;border:none;padding:6px 12px;border-radius:20px">👍 <span id="like-{{idea.id}}">{{ idea.likes }}</span> Helpful</button>
+<buton onclick="navigator.clipboard.writeText(window.location.href); alert('Idea copied - share to WhatsApp group!')" style="background:#e0f0ff;border:none;padding:6px 12px;border-radius:20px">🖇️ Share</button>
+<a href="/create-video" style="background:#ff6b00;color:#fff;padding:6px 12px;border-radius:20px;text-decoration:none:font-size:14px">I Can Do This - Open Shop<a/></div></div>
+{% else %}<p style="text-align:center;padding:20px">No ideas yet - be first to post!</p>{% endfor %}
+
+<script>function likeIdea(id){fetch('/idea/'+id'/like',{method:'POST'}).then(r=>r.json()).then(d=>{document.getElementById('like-'+id).innerText=d.likes})}</script>
+</body></html>

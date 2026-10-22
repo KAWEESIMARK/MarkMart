@@ -1,0 +1,22 @@
+<!-- SPIN & WIN - Keeps buyer daily -->
+<div id="spinBox" style"background:linear-gradient(135deg,#ff6b00,#ff3b30);color:#fff;margin:12px;padding:16px;border-radius:12px;text-align:center">
+  <h3 style="margin:0">🛞 Daily Spin & Win!</h3><p style="margin:5px 0;font-size:13px">Spin daily, win discount for tomatoes, fish, etc.</p>
+  <div id="wheel" style="font-size:60px;margin:10px">🛞</div>
+  <button onclick="doSpin()" id="spinBtn" style="background:#fff;color:#ff6b00;border:none;padding:10px 20px;border-radius:20px;font-weight:bold">SPIN - NOW - FREE</button>
+  <div id="reward" style="margin-top:10px;font-weight:bold"></div>
+  <a href="/business-news">📰 Business News</a>
+</div>
+<script>
+function doSpin(){
+  document.getElementById('wheel').style.animation="spin 1s linear infinite";
+  fetch('/spin',{method:'POST'}).then(r=>r.json()).then(d=>{
+    setTimeout(()=>{
+      document.getElementById('wheel').style.animation="";
+      document.getElementById('reward').innerHTML=`🏆 You won: ${d.reward}<br><small>Use within 24h! <a href='reels'>Watch Reels</a></small>`;
+      document.getElementById('spinBtn').innerText="Come Tomorrow for New Spin";
+      document.getElementById('spinBtn').disabled=true;
+    },1000);
+  });
+}
+</script>
+<style>@keyframes spin{100%{transform:rotate(360deg)}}</style>
