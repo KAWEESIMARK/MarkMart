@@ -5,20 +5,28 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 
 app = Flask(__name__)
-# Fix for Vercel - use /tmp folder which is writable
-if os.environ.get('VERCEL'):
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tmp/market.db'
+#Fix for vercel - use /tmp folder which is writable
+if not os.environ.get('VERCEL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/market.db'
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
-app.config['SECRET_KEY'] = 'MarkMart'
-app.config['UPLOAD_FOLDER'] = 'static/logos'
-app.config['PRODUCT_FOLDER'] = 'static/products'
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-os.makedirs(app.config['PRODUCT_FOLDER'], exist_ok=True)
-os.makedirs('static/videos', exist_ok=True)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////market.db'
+
+app.cofig['SECRET_KEY'] = 'MarkMart'
+if not os.environ.get('VERCEL'):
+    app.config['UPLOAD_FOLDER'] = 'static/logos'
+    app.config['PRODUCT_FOLDER'] = 'static/products'
+    os.makedirs('static/logos', exist_ok=True)
+    os.makedirs('static/products', exist_ok=True)
+    os.makedirs('static/videos', exist_ok=True)
+else:
+    app.config['UPLOAD_FOLDER'] = '/tmp/logos'
+    app.config['PRODUCT_FOLDER'] = 'tmp/products'
+    os.makedirs('/tmp/logos', exist_ok=True)
+    os.makedirs('/tmp/products', exist_ok=True)
+    os.makedirs('/tmp/videos', exist_ok=True)
 
 db = SQLAlchemy(app)
-ADMIN_KEY = "Mark2026!"
+ADMIN_KEY = "Mark2026"
 ALLOWED = {'png','jpg','jpeg','webp'}
 
 class Shop(db.Model):
@@ -523,7 +531,7 @@ def create_page():
 
 @app.route('/for-you')
 def for_you_page():
-    products = Products.query.all()
+    products = Product.query.all()
     return render_template('home.html', products=products)
 
 @app.route('/chat/<int:shop_id>')

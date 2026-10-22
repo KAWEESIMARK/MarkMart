@@ -2,3 +2,5 @@ Downloads/
 *.exe
 *.ini
 *.htm
+market.db
+instance/
