@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, render_template, render_template_string, jsonify
+from flask import Flask, request, redirect, render_template, render_template_string, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -540,8 +540,8 @@ def live_chat(shop_id):
     return f"<h1>Live Chat with {shop.name}</h1><p>Chat feature coming - WhatsApp: {shop.whatsapp}</p><a href='/'>Back<?a>"
 
 @app.route('/manifest.json')
-def serve_manifest_file():
-    return render_template('manifest.json')
+def serve_manifest():
+    return send_from_directory('static', 'manifest.json')
 
 @app.route('/sw.js')
 def sw():
