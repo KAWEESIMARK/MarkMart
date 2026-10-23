@@ -24,6 +24,8 @@ else:
 app.config['SECRET_KEY'] = 'MarkMart'
 
 db = SQLAlchemy(app)
+with app.app_context():
+    db.create_all()
 ADMIN_KEY = "Mark2026"
 ALLOWED = {'png','jpg','jpeg','webp'}
 
@@ -541,7 +543,7 @@ def live_chat(shop_id):
 def serve_manifest_file():
     return render_template('manifest.json')
 
-if __name__=='__main__':
+if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
