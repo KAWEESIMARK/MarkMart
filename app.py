@@ -543,6 +543,10 @@ def live_chat(shop_id):
 def serve_manifest_file():
     return render_template('manifest.json')
 
+@app.route('/')
+def root():
+    return redirect('/home')
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
