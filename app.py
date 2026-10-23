@@ -544,8 +544,6 @@ def serve_manifest_file():
     return render_template('manifest.json')
 
 if __name__=='__main__':
-    import os
-    from waitress import serve
-    port = int(os.environ.get('PORT', 10000))
-    print(f"MarkMart PRODUCTION on port {port}")
-    serve(app, host='0.0.0.0', port=port)
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)
