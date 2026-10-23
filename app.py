@@ -547,6 +547,16 @@ def serve_manifest_file():
 def root():
     return redirect('/home')
 
+from flask import send_from_directory
+
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json')
+
+@app.route('/static/manifest.json')
+def manifest_static():
+    return send_from_directory('static', 'manifest.json')
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
