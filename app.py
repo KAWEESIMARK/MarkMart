@@ -1,31 +1,31 @@
 import os
-from flask import Flask, request, redirect, render_template, render_template_string, jsonify, send_from_directory
+from flask import Flask, request, redirect, render_template, render_template_string, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from datetime import datetime
 
 app = Flask(__name__)
-
-if os.environ.get('VERCEL'):
+#Fix for vercel - use /tmp folder which is writable
+if not os.environ.get('VERCEL'):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/market.db'
-    app.config['UPLOAD_FOLDER'] = '/tmp/logos'
-    app.config['PRODUCT_FOLDER'] = 'tmp/products'
-    os.makedirs('/tmp/logos', exist_ok=True)
-    os.makedirs('/tmp/products', exist_ok=True)
-    os.makedirs('/tmp/videos', exist_ok=True)
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////market.db'
+
+app.cofig['SECRET_KEY'] = 'MarkMart'
+if not os.environ.get('VERCEL'):
     app.config['UPLOAD_FOLDER'] = 'static/logos'
     app.config['PRODUCT_FOLDER'] = 'static/products'
     os.makedirs('static/logos', exist_ok=True)
     os.makedirs('static/products', exist_ok=True)
     os.makedirs('static/videos', exist_ok=True)
-
-app.config['SECRET_KEY'] = 'MarkMart'
+else:
+    app.config['UPLOAD_FOLDER'] = '/tmp/logos'
+    app.config['PRODUCT_FOLDER'] = 'tmp/products'
+    os.makedirs('/tmp/logos', exist_ok=True)
+    os.makedirs('/tmp/products', exist_ok=True)
+    os.makedirs('/tmp/videos', exist_ok=True)
 
 db = SQLAlchemy(app)
-with app.app_context():
-    db.create_all()
 ADMIN_KEY = "Mark2026"
 ALLOWED = {'png','jpg','jpeg','webp'}
 
@@ -543,21 +543,13 @@ def live_chat(shop_id):
 def serve_manifest_file():
     return render_template('manifest.json')
 
-@app.route('/')
-def root():
-    return redirect('/home')
+@app.route('/sw.js')
+def sw():
+    return send_from_directory('static', 'sw.js')
 
-from flask import send_from_directory
-
-@app.route('/manifest.json')
-def manifest():
-    return send_from_directory('static', 'manifest.json')
-
-@app.route('/static/manifest.json')
-def manifest_static():
-    return send_from_directory('static', 'manifest.json')
-
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+if __name__=='__main__':
+    import os
+    from waitress import serve
+    port = int(os.environ.get('PORT', 10000))
+    print(f"MarkMart PRODUCTION on port {port}")
+    serve(app, host='0.0.0.0', port=port)
