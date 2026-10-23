@@ -5,25 +5,24 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 
 app = Flask(__name__)
-#Fix for vercel - use /tmp folder which is writable
+
 if not os.environ.get('VERCEL'):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/market.db'
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////market.db'
-
-app.cofig['SECRET_KEY'] = 'MarkMart'
-if not os.environ.get('VERCEL'):
-    app.config['UPLOAD_FOLDER'] = 'static/logos'
-    app.config['PRODUCT_FOLDER'] = 'static/products'
-    os.makedirs('static/logos', exist_ok=True)
-    os.makedirs('static/products', exist_ok=True)
-    os.makedirs('static/videos', exist_ok=True)
-else:
     app.config['UPLOAD_FOLDER'] = '/tmp/logos'
     app.config['PRODUCT_FOLDER'] = 'tmp/products'
     os.makedirs('/tmp/logos', exist_ok=True)
     os.makedirs('/tmp/products', exist_ok=True)
     os.makedirs('/tmp/videos', exist_ok=True)
+
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////market.db'
+    app.config['UPLOAD_FOLDER'] = 'static/logos'
+    app.config['PRODUCT_FOLDER'] = 'static/products'
+    os.makedirs('static/logos', exist_ok=True)
+    os.makedirs('static/products', exist_ok=True)
+    os.makedirs('static/videos', exist_ok=True)
+
+app.config['SECRET_KEY'] = 'MarkMart'
 
 db = SQLAlchemy(app)
 ADMIN_KEY = "Mark2026"
