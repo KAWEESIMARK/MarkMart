@@ -6,14 +6,13 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-if not os.environ.get('VERCEL'):
+if os.environ.get('VERCEL'):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/market.db'
     app.config['UPLOAD_FOLDER'] = '/tmp/logos'
     app.config['PRODUCT_FOLDER'] = 'tmp/products'
     os.makedirs('/tmp/logos', exist_ok=True)
     os.makedirs('/tmp/products', exist_ok=True)
     os.makedirs('/tmp/videos', exist_ok=True)
-
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////market.db'
     app.config['UPLOAD_FOLDER'] = 'static/logos'
