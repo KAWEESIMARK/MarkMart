@@ -10,15 +10,28 @@
   "theme_color": "#ff7a00",
   "id": "id:/",
   "description": "MarkMart - Best online grocery and market",
-  "categories": [
-    "business",
-    "events",
-    "finance",
-    "magazines",
-    "networking",
-    "news",
-    "photo &amp; video",
-    "social",
-    "social networking"
-  ]
+  "icons": [
+    {
+      "src": "/static/icons/launcher-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/launcher-icon-96x96",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/launcher-icon-192x192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/icons/launcher-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "shopping", "finance", "news", "ideas"]
 }

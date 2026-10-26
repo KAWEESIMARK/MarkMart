@@ -10,22 +10,22 @@ body{font-family:Arial;margin:0;background:#f6f6f6}
 .header{background:#0d8a3e;color:white;padding:15px;text-align:center;font-weight:bold;font-size:20px}
 .nav{display:flex;overflow-x:auto;background:white;padding:10px;gap:10px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
 .nav div{background:#e8f5e9;padding:8px 14px;border-radius:20px;white-space:nowrap;cursor:pointer;font-size:13px}
-.products{display:grid;grid-templatecolumns:1fr 1fr;gap:10px;padding:10px}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
 .card{background:white;border-radius:10px;padding:10px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
 .card img{width:100%;height:100px;object-fit:cover;border-radius:8px;background:#ddd}
 .price{color:#0d8a3e;font-weight:bold;margin-top:5px}
 .news{background:white;margin:10px;padding:15px;border-radius:10px}
-.news h3{margin:0 0 10px 0;color:#0d8a3e;border-bottom:2px solid "ff7a00;padding-bottom:5px}
+.news h3{margin:0 0 10px 0;color:#0d8a3e;border-bottom:2px solid "ff7a00;padding-bottom:5px"}
 .news-item{padding:10px 0;border-bottom: 1px solid #eee;font-size: 14px}
 .news-item:last-child{border:none}
 </style>
 </head>
 <body>
-<div class="header">MarkMart UG</div>
+<div class="header">MarkMart </div>
 <div class="nav">
 <div>All</div><div>Phones</div>Clothes</div><div>Shoes</div><div>Food</div><div>Business News</div>
 
-<div style="position:fixed; top:0; width:100%; background:#00a651: color:white; padding:12px; display:flex; justify-content:space-around; z-index:1000; font-weight:bold;>"
+<div style="position:fixed; top:0; width:100%; background:#00a651; color:white; padding:12px; display:flex; justify-content:space-around; z-index:1000; font-weight:bold;"></div>"
   <a href="/" style="color:white; text-decoration:none;">🏠 For You</a>
   <a href="/trending" style="color:white; text-decoration:none;"> Trending</a>
   <a href="/reels" style="color:white; text-decoration:none;"> Reels</a>
@@ -42,10 +42,10 @@ body{font-family:Arial;margin:0;background:#f6f6f6}
 </div>
 
 <div class="products">
-<div class="card"><img><div>Smart Phone Tecno</div><div class="price">350,000 UGX</div></div>
-<div class="card"><img><div>Running Shoes</div><div class="price">80,000 UGX</div></div>
-<div class="card"><img><div>Men's T-Shirt</div><div class="price">25,000 UGX</div></div>
-<div class="card"><img><div>Rice 25kg</div><div class="price">75,000 UGX</div></div>
+<div class="card"><img src="/static/products/phones.jpg" style="width:100%;height:150px;object-fit:cover;border-radius:8px;"><div>Smart Phone Tecno</div><div class="price">350,000 UGX</div></div>
+<div class="card"><img src="/static/products/shoes.jpg" style="width:100%;height:150px;object-fit:cover;border-radius:8px;"><div>Running Shoes</div><div class="price">80,000 UGX</div></div>
+<div class="card"><img src="/static/products/T-shirt.jpg" style="width:100%;height:150px;object-fit:cover;border-radius:8px;"><div>Men's T-Shirt</div><div class="price">25,000 UGX</div></div>
+<div class="card"><img src="/static/products/rice.jpg" style="width:100%;height:150px;object-fit:cover;border-radius:8px;"><div>Rice 25kg</div><div class="price">75,000 UGX</div></div>
 </div>
 
 <div class="news">

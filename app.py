@@ -5,13 +5,13 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 
 app = Flask(__name__)
-#Fix for vercel - use /tmp folder which is writable
-if not os.environ.get('VERCEL'):
+#Fix for Vercel - /tmp folder which is writable on Vercel, market.bd is for local Windows
+if os.environ.get('VERCEL'):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/market.db'
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////market.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
 
-app.cofig['SECRET_KEY'] = 'MarkMart'
+app.config['SECRET_KEY'] = 'MarkMart'
 if not os.environ.get('VERCEL'):
     app.config['UPLOAD_FOLDER'] = 'static/logos'
     app.config['PRODUCT_FOLDER'] = 'static/products'
@@ -145,7 +145,7 @@ HOME_PAGE = '''
 <!DOCTYPE html>
 <html><head><meta name="viewport" content="width=device-width, initial-scale=1"><title>MarkMart</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<link rel="manifest" href="/static/manifest.json">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#ff6a00">
 <script>
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('/static/sw.js')}
@@ -317,10 +317,6 @@ def api_send():
     m=Chat(name="Mark" if is_admin else d.get('name','Customer')[:20], message=d.get('message','')[:500], shop_id=int(d.get('shop_id',0)), is_admin=is_admin, is_read=is_admin)
     db.session.add(m); db.session.commit()
     return jsonify({"ok":True})
-  
-@app.route('/sw.js')
-def sw():
-    return app.send_static_field('sw.js')
 
 @app.route('/manifest.json')
 def manifest():
@@ -331,7 +327,30 @@ def manifest():
         "display": "standalone",
         "background_color": "#ff6a00",
         "theme_color": "#ff6a00",
-        "icons": [{"src": "/static/logo.png","sizes":"192×192","type":"image/png"}]
+        "icons": [
+          {
+            "src": "/static/icons/launcher-icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+          },
+          {
+              "src": "/static/icons/launcher-icon-96x96.png",
+              "sizes": "96x96",
+              "type": "image/png"
+          },
+          {
+              "src": "/static/icons/launcher-icon-192x192.png",
+              "sizes": "192x192",
+              "type": "image/png"
+          },
+          {
+              "src": "/static/icons/launcher-icon-512x512.png",
+              "sizes": "512x512",
+              "type": "image/png",
+              "purpose": "any maskable"
+          }
+        ],
+        "categories": ["business", "shopping", "finance", "news", "ideas","trending"]
     })
 
 @app.route('/reels')
@@ -545,7 +564,7 @@ def serve_manifest():
 
 @app.route('/sw.js')
 def sw():
-    return send_from_directory('static', 'sw.js')
+    return send_from_directory('static', 'sw.js', mimetype='application/javascript')
 
 if __name__=='__main__':
     import os
