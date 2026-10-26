@@ -7,7 +7,7 @@ c = c.replace('style+"color', 'style="color')
 c = c.replace("os,path.join", "os.path.join")
 c = c.replace("VideoAd.quey", "VideoAd.query")
 c = c.replace("Ĳ Home", "Home")
-c = c.replace("them(function", "then(function)"
+c = c.replace("them(function", "then(function)")
 c = c.replace("seetInterval", "setInterval")
 c = c.rplace("then9data", "then(data")
 C = c.replace("{data.legth-1]", "[data.length-1]")
