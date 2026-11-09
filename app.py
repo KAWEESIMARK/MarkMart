@@ -544,6 +544,7 @@ def trending_page():
     products = Product.query.order_by(Product.id.desc()).limit(20).all()
     return render_template('trending.html', products=products)
 
+
 @app.route('/create')
 def create_page():
     return render_template('create_video.html')
